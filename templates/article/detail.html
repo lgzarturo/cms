@@ -1,0 +1,11 @@
+{% extends 'layout/base.html' %}
+
+{% block title %}
+    {{ instance.title }} | {{ block.super }}
+{% endblock %}
+
+{% block content %}
+<h1>{{ title }}: {{ instance.title }}</h1>
+    <small>{{ instance.timestamp }} &bullet; {{ instance.updated }}</small>
+    <blockquote>{{ instance.content }}</blockquote>
+{% endblock %}

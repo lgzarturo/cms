@@ -1,0 +1,21 @@
+{% extends 'layout/base.html' %}
+
+{% block title %}
+    {{ title }}
+{% endblock %}
+
+{% block content %}
+    <h1>Hola mundo desde el template {{ title }}</h1>
+
+
+    {% for object in object_list %}
+        <h2><a href="{{ object.get_absolute_url }}">{{ object.title }}</a></h2>
+        <blockquote>{{ object.content }}</blockquote>
+        <ul>
+            <li>{{ object.timestamp }}</li>
+            <li>{{ object.updated }}</li>
+            <li>{{ object.id }}</li>
+        </ul>
+        <hr>
+    {% endfor %}
+{% endblock %}
