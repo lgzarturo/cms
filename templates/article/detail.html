@@ -5,7 +5,12 @@
 {% endblock %}
 
 {% block content %}
-<h1>{{ title }}: {{ instance.title }}</h1>
-    <small>{{ instance.timestamp }} &bullet; {{ instance.updated }}</small>
-    <blockquote>{{ instance.content }}</blockquote>
+    <div class="col-sm-6 col-sm-offset-3">
+        <h1>{{ title }}: {{ instance.title }}</h1>
+        <small>
+            <span class="badge">{{ instance.timestamp }}</span> &bullet;
+            <span class="badge">{{ instance.updated }}</span>
+        </small>
+        <blockquote class="lead">{{ instance.content|linebreaks }}</blockquote>
+    </div>
 {% endblock %}

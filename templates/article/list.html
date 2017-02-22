@@ -7,15 +7,35 @@
 {% block content %}
     <h1>Hola mundo desde el template {{ title }}</h1>
 
-
+    <div class="row">
     {% for object in object_list %}
-        <h2><a href="{{ object.get_absolute_url }}">{{ object.title }}</a></h2>
-        <blockquote>{{ object.content }}</blockquote>
-        <ul>
-            <li>{{ object.timestamp }}</li>
-            <li>{{ object.updated }}</li>
-            <li>{{ object.id }}</li>
-        </ul>
-        <hr>
+        <div class="col-sm-6 col-md-6">
+            <div class="thumbnail">
+                <div class="caption">
+                    <h3>
+                        <a href="{{ object.get_absolute_url }}">{{ object.title|truncatechars:50 }}</a>
+                        <small>{{ object.timestamp|timesince }}</small>
+                    </h3>
+                    <p>{{ object.content|linebreaks|truncatechars:160 }}</p>
+                    <p><a href="{{ object.get_absolute_url }}" class="btn btn-primary">Ver</a></p>
+                </div>
+            </div>
+        </div>
+        {% cycle "" "</div><hr/><div class='row'>" %}
     {% endfor %}
+
+        <div class="paginator">
+            <div class="step-links">
+                {% if object_list.has_previous %}
+                <a href="?{{ page_request_var }}={{ object_list.previous_page_number }}">Anterior</a>
+                {% endif %}
+                <span class="current">
+                    Página {{ object_list.number }} de {{ object_list.paginator.num_pages }} páginas
+                </span>
+                {% if object_list.has_next%}
+                <a href="?{{ page_request_var }}={{ object_list.next_page_number }}">Siguiente</a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
 {% endblock %}

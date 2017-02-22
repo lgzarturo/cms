@@ -1,0 +1,9 @@
+# IDE files
+.idea/
+
+# Sqlite DB
+*.sqlite3
+
+# Recursos estaticos
+static_cdn/
+media_cdn/
