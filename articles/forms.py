@@ -8,5 +8,8 @@ class ArticleForm(forms.ModelForm):
         model = Article
         fields = [
             "title",
-            "content"
+            "image",
+            "content",
+            "draft",
+            "publish",
         ]

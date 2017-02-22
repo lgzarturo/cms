@@ -7,14 +7,31 @@
 {% block content %}
     <h1>Hola mundo desde el template {{ title }}</h1>
 
+    <form method="GET">
+        <input type="text" name="q" placeholder="Buscar artículos" value="{{ request.GET.q }}" />
+        <input type="submit" value="Buscar" />
+    </form>
+
     <div class="row">
     {% for object in object_list %}
         <div class="col-sm-6 col-md-6">
             <div class="thumbnail">
+                {% if object.image %}
+                    <img src="{{ object.image.url }}" alt="{{ object.title }}" class="img-responsive" />
+                {% endif %}
                 <div class="caption">
                     <h3>
                         <a href="{{ object.get_absolute_url }}">{{ object.title|truncatechars:50 }}</a>
-                        <small>{{ object.timestamp|timesince }}</small>
+                        <small>
+                            {{ object.publish|timesince }}
+                            {% if object.draft %}
+                                &nbsp;<span style="color:red;">Draft
+                                {% if object.publish > today %}
+                                    &nbsp;future article
+                                {% endif %}
+                                </span>
+                            {% endif %}
+                        </small>
                     </h3>
                     <p>{{ object.content|linebreaks|truncatechars:160 }}</p>
                     <p><a href="{{ object.get_absolute_url }}" class="btn btn-primary">Ver</a></p>
@@ -23,17 +40,19 @@
         </div>
         {% cycle "" "</div><hr/><div class='row'>" %}
     {% endfor %}
+    </div>
 
-        <div class="paginator">
+    <div class="row">
+        <div class="col-md-12 paginator">
             <div class="step-links">
                 {% if object_list.has_previous %}
-                <a href="?{{ page_request_var }}={{ object_list.previous_page_number }}">Anterior</a>
+                <a href="?{{ page_request_var }}={{ object_list.previous_page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}">Anterior</a>
                 {% endif %}
                 <span class="current">
                     Página {{ object_list.number }} de {{ object_list.paginator.num_pages }} páginas
                 </span>
                 {% if object_list.has_next%}
-                <a href="?{{ page_request_var }}={{ object_list.next_page_number }}">Siguiente</a>
+                <a href="?{{ page_request_var }}={{ object_list.next_page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}">Siguiente</a>
                 {% endif %}
             </div>
         </div>

@@ -1,16 +1,63 @@
 {% extends 'layout/base.html' %}
+{% load urlfy %}
 
 {% block title %}
     {{ instance.title }} | {{ block.super }}
 {% endblock %}
 
+{% block microformat %}
+    <meta property="og:url"           content="{{ request.build_absolute_uri }}" />
+    <meta property="og:type"          content="website" />
+    <meta property="og:title"         content="{{ instance.title }}" />
+    <meta property="og:description"   content="{{ instance.content|truncatechars:160 }}" />
+    {% if instance.image %}
+    <meta property="og:image"         content="{{ instance.image.url }}" />
+    {% endif %}
+{% endblock %}
+
 {% block content %}
     <div class="col-sm-6 col-sm-offset-3">
-        <h1>{{ title }}: {{ instance.title }}</h1>
+        <h1>{{ title }}: {{ instance.title }} <small>{% if instance.draft %}<span style="color:red;">Draft</span>{% endif %}</small></h1>
+        {% if instance.image %}
+            <img src="{{ instance.image.url }}" alt="{{ instance.title }}" class="img-responsive" />
+        {% endif %}
+        {% if instance.image %}
+            <script async defer src="https://assets.pinterest.com/js/pinit.js"></script>
+            <a data-pin-do="buttonBookmark" href="//www.pinterest.com/pin/create/button/">
+                <img src="{{ instance.image.url }}" alt="{{ instance.title }}" class="img-responsive hidden" />
+            </a>
+        {% endif %}
+
+        <div class="fb-like" data-href="{{ request.build_absolute_uri }}" data-layout="standard" data-action="like" data-size="small" data-show-faces="true" data-share="true"></div>
+
         <small>
-            <span class="badge">{{ instance.timestamp }}</span> &bullet;
-            <span class="badge">{{ instance.updated }}</span>
+            <span class="badge">{{ instance.publish }}</span> &bullet;
+            <span class="badge">{{ instance.updated }}</span> &bullet;
+            <span class="badge">{{ instance.user.get_full_name }}</span>
         </small>
         <blockquote class="lead">{{ instance.content|linebreaks }}</blockquote>
+
+        <a href="https://www.facebook.com/sharer/sharer.php?u={{ request.build_absolute_uri }}">
+            Facebook
+        </a>
+
+        <a href="https://twitter.com/home?status={{ instance.content|truncatechars:80|urlfy }}@arthurolg%20{{ request.build_absolute_uri }}">
+            Twitter
+        </a>
+
+        <a href='https://plus.google.com/share?url={{ request.build_absolute_uri }}'>
+            Google Plus
+        </a>
+
+        <a href="https://www.linkedin.com/shareArticle?mini=true&url={{ request.build_absolute_uri }}&title={{ instance.title|urlfy }}&summary={{ instance.content|urlfy }}&source={{ request.build_absolute_uri }}/">
+            Linkedin
+        </a>
+
+        <a href="http://www.reddit.com/submit?url={{ request.build_absolute_uri }}&title={{ instance.title|urlfy }}">
+            Reddit
+        </a>
+
+        <div class="fb-comments" data-href="{{ request.build_absolute_uri }}" data-numposts="5"></div>
+
     </div>
 {% endblock %}
