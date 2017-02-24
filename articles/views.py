@@ -1,5 +1,4 @@
 # coding=utf-8
-from datetime import datetime
 from django.contrib import messages
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.db.models.query_utils import Q
