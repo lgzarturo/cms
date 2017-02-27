@@ -4,6 +4,8 @@ from django.conf.urls.static import static
 from django.contrib import admin
 
 urlpatterns = [
+    url(r'^summernote/', include('django_summernote.urls')),
+    url(r'^grappelli/', include('grappelli.urls')),
     url(r'^admin/', admin.site.urls),
     url(r'^articles/', include("articles.urls", namespace="article")),
     url(r'^newsletter/', include("newsletters.urls", namespace="newsletter")),
@@ -11,5 +13,9 @@ urlpatterns = [
 
 
 if settings.DEBUG:
+    import debug_toolbar
+    urlpatterns += [
+        url(r'^__debug__/', include(debug_toolbar.urls)),
+    ]
     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

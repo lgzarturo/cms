@@ -1,5 +1,5 @@
 from django import forms
-
+from django_summernote.widgets import SummernoteWidget
 from .models import Article
 
 
@@ -13,3 +13,6 @@ class ArticleForm(forms.ModelForm):
             "draft",
             "publish",
         ]
+        widgets = {
+            "content": SummernoteWidget(),
+        }
