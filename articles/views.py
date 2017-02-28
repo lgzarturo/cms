@@ -8,7 +8,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.utils import timezone
 
 # request.user.is_authenticated() - Determina si el usuario esta autenticado
-from articles.forms import ArticleForm
+from articles.forms import ArticleForm, SearchForm
 from articles.models import Article
 
 
@@ -19,14 +19,18 @@ def article_list(request):
     else:
         queryset_list = Article.objects.active()
 
-    query = request.GET.get("q")
-    if query:
-        queryset_list = queryset_list.filter(
-            Q(title__icontains=query) |
-            Q(content__icontains=query) |
-            Q(user__first_name__icontains=query) |
-            Q(user__last_name__icontains=query)
-        ).distinct()
+    if request.method == 'POST':
+        form = SearchForm(request.POST)
+        if form.is_valid():
+            query = form.cleaned_data['q']
+            queryset_list = queryset_list.filter(
+                Q(title__icontains=query) |
+                Q(content__icontains=query) |
+                Q(user__first_name__icontains=query) |
+                Q(user__last_name__icontains=query)
+            ).distinct()
+    else:
+        form = SearchForm()
 
     paginator = Paginator(queryset_list, 10)
     page_request_var = 'page'
@@ -42,7 +46,8 @@ def article_list(request):
         "title": "List",
         "object_list": queryset,
         "page_request_var": page_request_var,
-        "today": today
+        "today": today,
+        "form": form
     }
     return render(request, "article/list.html", context)
 

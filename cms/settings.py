@@ -33,6 +33,7 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     'newsletters.apps.NewslettersConfig',
     'articles.apps.ArticlesConfig',
+    'crispy_forms',
     'django_summernote',
     'grappelli',
     'django.contrib.admin',
@@ -145,6 +146,8 @@ GRAPPELLI_AUTOCOMPLETE_LIMIT = 10
 GRAPPELLI_AUTOCOMPLETE_SEARCH_FIELDS = 10
 
 GRAPPELLI_SWITCH_USER = False
+
+CRISPY_TEMPLATE_PACK = 'bootstrap3'
 
 SUMMERNOTE_CONFIG = {
     # Using SummernoteWidget - iframe mode

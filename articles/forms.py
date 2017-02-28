@@ -1,3 +1,4 @@
+# coding=utf-8
 from django import forms
 from django_summernote.widgets import SummernoteWidget
 from .models import Article
@@ -16,3 +17,7 @@ class ArticleForm(forms.ModelForm):
         widgets = {
             "content": SummernoteWidget(),
         }
+
+
+class SearchForm(forms.Form):
+    q = forms.CharField(max_length=100, label='Búsqueda')
