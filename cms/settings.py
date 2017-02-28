@@ -33,6 +33,10 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     'newsletters.apps.NewslettersConfig',
     'articles.apps.ArticlesConfig',
+    'taggit',
+    'taggit_helpers',
+    'djangoseo',
+    'analytical',
     'crispy_forms',
     'django_summernote',
     'grappelli',
@@ -41,6 +45,7 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
+    'django.contrib.sites',
     'django.contrib.staticfiles',
     'debug_toolbar',
 ]
@@ -128,7 +133,6 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
 ]
@@ -147,7 +151,21 @@ GRAPPELLI_AUTOCOMPLETE_SEARCH_FIELDS = 10
 
 GRAPPELLI_SWITCH_USER = False
 
+SITE_ID = 1
+
 CRISPY_TEMPLATE_PACK = 'bootstrap3'
+
+ANALYTICAL_AUTO_IDENTIFY = True
+
+GOOGLE_ANALYTICS_PROPERTY_ID = 'UA-86275612-1'
+
+GOOGLE_ANALYTICS_DISPLAY_ADVERTISING = True
+
+GOOGLE_ANALYTICS_SITE_SPEED = True
+
+GOOGLE_ANALYTICS_SESSION_COOKIE_TIMEOUT = 3600000
+
+GOOGLE_ANALYTICS_VISITOR_COOKIE_TIMEOUT = 3600000
 
 SUMMERNOTE_CONFIG = {
     # Using SummernoteWidget - iframe mode

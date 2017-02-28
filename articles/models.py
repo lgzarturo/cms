@@ -6,6 +6,7 @@ from django.db import models
 from django.db.models.signals import pre_save
 from django.utils import timezone
 from django.utils.text import slugify
+from taggit.managers import TaggableManager
 
 
 class ArticleManager(models.Manager):
@@ -33,6 +34,7 @@ class Article(models.Model):
     updated = models.DateTimeField(auto_now=True, auto_now_add=False)
     timestamp = models.DateTimeField(auto_now=False, auto_now_add=True)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, default=1)
+    tags = TaggableManager()
 
     objects = ArticleManager()
 

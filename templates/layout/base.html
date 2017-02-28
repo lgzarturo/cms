@@ -1,4 +1,6 @@
 {% load staticfiles %}
+{% load google_analytics %}
+{% load seo %}
 <!doctype html>
 <html lang="es">
 <head>
@@ -12,6 +14,7 @@
     <link rel="stylesheet" href="{% static "css/flat-ui.min.css" %}">
     <link rel="stylesheet" href="{% static "css/font-awesome.min.css" %}">
     <link rel="stylesheet" href="{% static "css/base.css" %}">
+    {% get_metadata %}
     {% block microformat %}{% endblock %}
     <style>
         {% block style %}/* --- CSS --- */{% endblock %}
@@ -22,6 +25,7 @@
       <script src="{% static "js/vendor/html5shiv.js" %}"></script>
       <script src="{% static "js/vendor/respond.min.js" %}"></script>
     <![endif]-->
+
 </head>
 <body>
     <div id="fb-root"></div>
@@ -32,6 +36,7 @@
       js.src = "//connect.facebook.net/es_ES/sdk.js#xfbml=1&version=v2.8";
       fjs.parentNode.insertBefore(js, fjs);
     }(document, 'script', 'facebook-jssdk'));</script>
+    {% google_analytics %}
 
     <div class="container">
         {% include "tags/messages.html" %}
@@ -46,5 +51,6 @@
     <script>
         {% block script %}/* --- Javascript --- */{% endblock %}
     </script>
+
 </body>
 </html>
