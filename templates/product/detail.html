@@ -1,0 +1,26 @@
+{% extends 'layout/base.html' %}
+{% load urlfy %}
+
+{% block title %}
+    {{ object.title }} | {{ block.super }}
+{% endblock %}
+
+{% block microformat %}
+    <meta property="og:url"           content="{{ request.build_absolute_uri }}" />
+    <meta property="og:type"          content="website" />
+    <meta property="og:title"         content="{{ object.title }}" />
+    <meta property="og:description"   content="{{ object.description|truncatechars:160 }}" />
+{% endblock %}
+
+{% block content %}
+    <div class="col-sm-6 col-sm-offset-3">
+        <h1>{{ object.title }}</h1>
+
+        <div class="fb-like" data-href="{{ request.build_absolute_uri }}" data-layout="standard" data-action="like" data-size="small" data-show-faces="true" data-share="true"></div>
+
+        <blockquote class="lead">
+            {% autoescape off %} {{ object.description }} {% endautoescape %}
+        </blockquote>
+
+    </div>
+{% endblock %}

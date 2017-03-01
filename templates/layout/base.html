@@ -1,6 +1,5 @@
 {% load staticfiles %}
 {% load google_analytics %}
-{% load seo %}
 <!doctype html>
 <html lang="es">
 <head>
@@ -14,7 +13,6 @@
     <link rel="stylesheet" href="{% static "css/flat-ui.min.css" %}">
     <link rel="stylesheet" href="{% static "css/font-awesome.min.css" %}">
     <link rel="stylesheet" href="{% static "css/base.css" %}">
-    {% get_metadata %}
     {% block microformat %}{% endblock %}
     <style>
         {% block style %}/* --- CSS --- */{% endblock %}

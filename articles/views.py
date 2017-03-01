@@ -54,7 +54,7 @@ def article_list(request):
 
 def article_detail(request, slug=None):
     instance = get_object_or_404(Article, slug=slug)
-    if instance.draft or instance.publish > timezone.now().date():
+    if instance.draft or instance.publish.date() > timezone.now().date():
         if not request.user.is_staff or not request.user.is_superuser:
             raise Http404
 

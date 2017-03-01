@@ -35,7 +35,9 @@
             <span class="badge">{{ instance.updated }}</span> &bullet;
             <span class="badge">{{ instance.user.get_full_name }}</span>
         </small>
-        <blockquote class="lead">{{ instance.content|linebreaks }}</blockquote>
+        <blockquote class="lead">
+            {% autoescape off %} {{ instance.content }} {% endautoescape %}
+        </blockquote>
 
         <a href="https://www.facebook.com/sharer/sharer.php?u={{ request.build_absolute_uri }}">
             Facebook

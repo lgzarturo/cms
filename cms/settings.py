@@ -31,11 +31,11 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'products.apps.ProductsConfig',
     'newsletters.apps.NewslettersConfig',
     'articles.apps.ArticlesConfig',
     'taggit',
     'taggit_helpers',
-    'djangoseo',
     'analytical',
     'crispy_forms',
     'django_summernote',
@@ -45,7 +45,6 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
-    'django.contrib.sites',
     'django.contrib.staticfiles',
     'debug_toolbar',
 ]
@@ -117,7 +116,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/1.10/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'es'
 
 TIME_ZONE = 'UTC'
 
@@ -151,8 +150,6 @@ GRAPPELLI_AUTOCOMPLETE_SEARCH_FIELDS = 10
 
 GRAPPELLI_SWITCH_USER = False
 
-SITE_ID = 1
-
 CRISPY_TEMPLATE_PACK = 'bootstrap3'
 
 ANALYTICAL_AUTO_IDENTIFY = True
@@ -183,14 +180,15 @@ SUMMERNOTE_CONFIG = {
     'height': '500',
 
     # Or, set editor language/locale forcely
-    'lang': 'es-EU',
+    'lang': 'es-ES',
 
     # Customize toolbar buttons
     'toolbar': [
         ['style', ['style']],
-        ['style', ['bold', 'italic', 'underline', 'clear']],
+        ['style', ['bold', 'italic', 'underline', 'superscript', 'subscript', 'strikethrough', 'clear']],
         ['para', ['ul', 'ol', 'height']],
-        ['insert', ['link']],
+        ['table', ['table']],
+        ['insert', ['link', 'picture', 'video', 'hr']],
     ],
 
     # Need authentication while uploading attachments.
