@@ -18,11 +18,9 @@
         <div class="col-sm-8">
             <h1>{{ object.title }}</h1>
         
-            {% if object.productimage_set.count > 0 %}
+            {% if object.get_image_url %}
             <div>
-                {% for img in object.productimage_set.all %}
-                <img src="{{ img.image.url }}" class="img-responsive">
-                {% endfor %}
+                <img src="{{ object.get_image_url }}" class="img-responsive">
             </div>
             {% endif %}
 
@@ -59,7 +57,13 @@
             <h4>Productos relacionados</h4>
 
             {% for product in related %}
-            <a href="{{ product.get_absolute_url }}">{{ product.title }}</a>&nbsp;
+                {% if object.get_image_url %}
+                    <a href="{{ product.get_absolute_url }}">
+                        <img src="{{ object.get_image_url }}" class="img-responsive" title="{{ product.title }}" width="100">
+                    </a>&nbsp;
+                {% else %}
+                    <a href="{{ product.get_absolute_url }}">{{ product.title }}</a>&nbsp;
+                {% endif %}
             {% endfor %}
         </div>
 
