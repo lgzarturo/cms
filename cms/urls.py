@@ -8,7 +8,8 @@ urlpatterns = [
     url(r'^grappelli/', include('grappelli.urls')),
     url(r'^admin/', admin.site.urls),
     url(r'^articles/', include("articles.urls", namespace="article")),
-    url(r'^product/', include("products.urls", namespace="product")),
+    url(r'^products/', include("products.urls", namespace="product")),
+    url(r'^categories/', include("products.urls_categories", namespace="category")),
     url(r'^newsletter/', include("newsletters.urls", namespace="newsletter")),
 ]
 

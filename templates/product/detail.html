@@ -6,21 +6,90 @@
 {% endblock %}
 
 {% block microformat %}
-    <meta property="og:url"           content="{{ request.build_absolute_uri }}" />
-    <meta property="og:type"          content="website" />
-    <meta property="og:title"         content="{{ object.title }}" />
-    <meta property="og:description"   content="{{ object.description|truncatechars:160 }}" />
+    {% include "product/microformat.html" %}
 {% endblock %}
 
 {% block content %}
-    <div class="col-sm-6 col-sm-offset-3">
-        <h1>{{ object.title }}</h1>
+    <div class="row">
+        <div class="col-sm-12">
+            {% include "tags/product-search.html" %}
+        </div>
 
-        <div class="fb-like" data-href="{{ request.build_absolute_uri }}" data-layout="standard" data-action="like" data-size="small" data-show-faces="true" data-share="true"></div>
+        <div class="col-sm-8">
+            <h1>{{ object.title }}</h1>
+        
+            {% if object.productimage_set.count > 0 %}
+            <div>
+                {% for img in object.productimage_set.all %}
+                <img src="{{ img.image.url }}" class="img-responsive">
+                {% endfor %}
+            </div>
+            {% endif %}
 
-        <blockquote class="lead">
-            {% autoescape off %} {{ object.description }} {% endautoescape %}
-        </blockquote>
+            <div class="fb-like" data-href="{{ request.build_absolute_uri }}" data-layout="standard" data-action="like" data-size="small" data-show-faces="true" data-share="true"></div>
+
+            <p class="lead">
+                {% autoescape off %} {{ object.description }} {% endautoescape %}
+            </p>
+        </div>
+
+        <!-- Product sidebar -->
+        <div class="col-sm-4">
+            {% if object.variation_set.count > 1 %}
+                <h3><span id="price">{{ object.variation_set.first.price }}</span> <small id="original-price">{{ object.variation_set.first.sale_price }}</small></h3>
+                <select name="variation-select" id="variation-select" class="form-control">
+                {% for variation in object.variation_set.all %}
+                    <option value="{{ variation.id }}" data-price="{{ variation.price }}" data-sale-price="{{ variation.sale_price }}">{{ variation }}</option>
+                {% endfor %}
+                </select>
+            {% else %}
+                {% if object.variation_set.first.sale_price %}
+                <h3><span id="price">{{ object.variation_set.first.sale_price }}</span> <small id="original-price">{{ object.variation_set.first.price }}</small></h3>
+                {% else %}
+                    <h3><span id="price">{{ object.variation_set.first.price }}</span> <small id="original-price"></small></h3>
+                {% endif %}
+            {% endif %}
+            <br>
+            <a href="#" class="btn btn-lg btn-success btn-block">Agregar al carrito</a>
+
+            <br>
+            <hr>
+            <br>
+
+            <h4>Productos relacionados</h4>
+
+            {% for product in related %}
+            <a href="{{ product.get_absolute_url }}">{{ product.title }}</a>&nbsp;
+            {% endfor %}
+        </div>
 
     </div>
+
 {% endblock %}
+
+
+<script>
+{% block jquery %}
+    /* --- Product detail --- */
+    var price = $("#price");
+    var original_price = $("#original-price");
+    var variation = $("#variation-select");
+
+    function setProductPrice() {
+        var value = variation.find("option:selected").attr("data-price");
+        var sale_price = variation.find("option:selected").attr("data-sale-price");
+        if (sale_price != "" && sale_price != "None" && sale_price != undefined) {
+            price.text(sale_price);
+            original_price.text("Original price: " + value);
+        } else {
+            price.text(value);
+        }
+    }
+
+    setProductPrice();
+
+    variation.change(function () {
+        setProductPrice();
+    });
+{% endblock %}
+</script>

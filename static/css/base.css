@@ -41,3 +41,18 @@ p {
 small {
     font-size: .75em;
 }
+
+.messages {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.messages li:last-child {
+    margin-bottom: 0;
+}
+
+#original-price {
+    color: red;
+    text-decoration: line-through;
+}

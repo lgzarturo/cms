@@ -1,0 +1,33 @@
+{% extends 'layout/base.html' %}
+{% load urlfy %}
+
+{% block title %}
+    {{ object.title }} | {{ block.super }}
+{% endblock %}
+
+{% block microformat %}
+    {% include "product/microformat.html" %}
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-sm-12">
+            {% include "tags/product-search.html" %}
+        </div>
+
+
+        <div class="col-md-12">
+            <div class="page-header">
+                <h1>{{ object }}</h1>
+            </div>
+
+            <div class="list-group">
+                {% for product in products %}
+                <a href="{{ product.get_absolute_url }}" class="list-group-item">{{ product.title }}</a>
+                {% endfor %}
+            </div>
+
+        </div>
+    </div>
+
+{% endblock %}

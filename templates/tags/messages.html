@@ -1,7 +1,14 @@
 {% if messages %}
     <ul class="messages">
         {% for message in messages %}
-        <li{% if message.tags %} class="{{ message.tags }}{% endif %}">
+        <li class="alert alert-dismissable
+            {% if "success" in message.tags %}alert-success {% endif %}
+            {% if "info" in message.tags %}alert-info {% endif %}
+            {% if "debug" in message.tags %}alert-warning {% endif %}
+            {% if "warning" in message.tags %}alert-warning {% endif %}
+            {% if "error" in message.tags %}alert-danger {% endif %}
+            {% if message.tags %}{{ message.tags }}{% endif %}" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
             {% if "html_safe" in message.tags %}{{ message|safe }}{% else %}{{ message }}{% endif %}
         </li>
         {% endfor %}
