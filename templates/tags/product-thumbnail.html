@@ -1,0 +1,22 @@
+<div class="thumbnail">
+    {% if photo == True %}
+    <a href="{{ product.get_absolute_url }}">
+        <img src="{{ product.get_image_url }}" class="img-responsive" alt="{{ product.title }}">
+    </a>
+    {% endif %}
+    <div class="caption">
+    <h3>
+        <a href="{{ product.get_absolute_url }}">
+            {{ product.title|truncatechars:50 }}
+        </a>
+    </h3>
+    <p>{{ product.description|linebreaks|truncatechars:160 }}</p>
+
+    {% if price == True %}
+        {{ product.variation_set.first.get_html_price }}
+    {% endif %}
+    <p>
+        <a href="{{ product.get_absolute_url }}" class="btn btn-primary" role="button">Ver</a>
+    </p>
+</div>
+</div>

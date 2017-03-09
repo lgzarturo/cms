@@ -3,6 +3,7 @@ from __future__ import unicode_literals
 from django.core.urlresolvers import reverse
 from django.db import models
 from django.db.models.signals import post_save
+from django.utils.safestring import mark_safe
 from django.utils.text import slugify
 
 
@@ -68,6 +69,14 @@ class Variation(models.Model):
         else:
             return self.price
 
+    def get_html_price(self):
+        if self.sale_price is not None:
+            html_text = "<span id='price'>%s</span> <small id='original-price'>%s</small>" \
+                        % (self.sale_price, self.price)
+        else:
+            html_text = "<span id='price'>%s</span>" % self.sale_price
+        return mark_safe(html_text)
+
     def get_absolute_url(self):
         return self.product.get_absolute_url()
 
@@ -119,3 +128,31 @@ class Category(models.Model):
 
     def get_absolute_url(self):
         return reverse("category:detail", kwargs={"slug":self.slug})
+
+
+def image_featured_upload_to(instance, filename):
+    title = instance.product.title
+    slug = slugify(title)
+    filename = slugify(filename)
+    return "products/%s/featured/%s" %(slug, filename)
+
+
+class ProductFeatured(models.Model):
+    product = models.ForeignKey(Product)
+    image = models.ImageField(upload_to=image_featured_upload_to,
+                              null=True,
+                              blank=True,
+                              width_field="width_field",
+                              height_field="height_field")
+    width_field = models.IntegerField(default=0)
+    height_field = models.IntegerField(default=0)
+    title = models.CharField(max_length=120, null=True, blank=True)
+    text = models.CharField(max_length=220, null=True, blank=True)
+    text_right = models.BooleanField(default=False)
+    make_image_background = models.BooleanField(default=False)
+    show_price = models.BooleanField(default=False)
+    active = models.BooleanField(default=True)
+
+    def __unicode__(self):
+        return self.product.title
+

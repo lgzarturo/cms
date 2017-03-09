@@ -56,15 +56,15 @@
 
             <h4>Productos relacionados</h4>
 
-            {% for product in related %}
-                {% if object.get_image_url %}
-                    <a href="{{ product.get_absolute_url }}">
-                        <img src="{{ object.get_image_url }}" class="img-responsive" title="{{ product.title }}" width="100">
-                    </a>&nbsp;
-                {% else %}
-                    <a href="{{ product.get_absolute_url }}">{{ product.title }}</a>&nbsp;
-                {% endif %}
-            {% endfor %}
+            <div class="row">
+                {% for product in related %}
+                    <div class="col-sm-6 col-md-6">
+                        {% include "tags/product-thumbnail.html" with product=product price=True photo=False %}
+                    </div>
+                    {% cycle "" "</div><hr/><div class='row'>" %}
+                {% endfor %}
+            </div>
+
         </div>
 
     </div>

@@ -1,0 +1,44 @@
+{% extends 'layout/base.html' %}
+
+{% block title %}
+    {{ title }} | {{ block.super }}
+{% endblock %}
+
+<style>
+    {% block style %}
+
+    .jumbotron {
+        {% if featured_img.make_image_background %}
+        background-image: url('{{ featured_img.image.url }}');
+        background-size: cover;
+        {% endif %}
+    }
+    {% endblock %}
+</style>
+
+{% block content %}
+    <div class="row">
+        <div class="col-sm-12">
+            <h1>{{ title }}</h1>
+
+            {% if featured_img %}
+                <div class="jumbotron">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h2>{{ featured_img.product.title }}</h2>
+                                <p>{{ featured_img.product.description }}</p>
+                                <a href="{{ featured_img.product.get_absolute_url }}" class="btn btn-primary btn-lg">
+                                    Ver detalles
+                                </a>
+                            </div>
+                            <div class="col-md-6">
+                                <img src="{{ featured_img.image.url }}" alt="{{ featured_img.product.title }}" class="img-responsive">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

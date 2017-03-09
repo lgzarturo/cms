@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from products.models import Product, Variation, ProductImage, Category
+from products.models import Product, Variation, ProductImage, Category, ProductFeatured
 
 
 @admin.register(Product)
@@ -25,3 +25,9 @@ class ProductImageAdmin(admin.ModelAdmin):
 class CategoryAdmin(admin.ModelAdmin):
     class Meta:
         model = Category
+
+
+@admin.register(ProductFeatured)
+class ProductFeaturedAdmin(admin.ModelAdmin):
+    class Meta:
+        model = ProductFeatured
