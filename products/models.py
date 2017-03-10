@@ -92,6 +92,7 @@ def product_saved_receiver(sender, instance, *args, **kwargs):
         new_var.sale_price = product.price
         new_var.save()
 
+
 post_save.connect(product_saved_receiver, sender=Product)
 
 
@@ -99,7 +100,7 @@ def image_upload_to(instance, filename):
     title = instance.product.title
     slug = slugify(title)
     filename = slugify(filename)
-    return "products/%s/%s" %(slug, filename)
+    return "products/%s/%s" % (slug, filename)
 
 
 class ProductImage(models.Model):
@@ -127,14 +128,14 @@ class Category(models.Model):
         return self.title
 
     def get_absolute_url(self):
-        return reverse("category:detail", kwargs={"slug":self.slug})
+        return reverse("category:detail", kwargs={"slug": self.slug})
 
 
 def image_featured_upload_to(instance, filename):
     title = instance.product.title
     slug = slugify(title)
     filename = slugify(filename)
-    return "products/%s/featured/%s" %(slug, filename)
+    return "products/%s/featured/%s" % (slug, filename)
 
 
 class ProductFeatured(models.Model):
@@ -148,6 +149,7 @@ class ProductFeatured(models.Model):
     height_field = models.IntegerField(default=0)
     title = models.CharField(max_length=120, null=True, blank=True)
     text = models.CharField(max_length=220, null=True, blank=True)
+    text_css_color = models.CharField(max_length=7, default="#", null=True, blank=True)
     text_right = models.BooleanField(default=False)
     make_image_background = models.BooleanField(default=False)
     show_price = models.BooleanField(default=False)
@@ -155,4 +157,3 @@ class ProductFeatured(models.Model):
 
     def __unicode__(self):
         return self.product.title
-

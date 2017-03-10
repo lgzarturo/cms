@@ -9,8 +9,10 @@
 
     .jumbotron {
         {% if featured_img.make_image_background %}
-        background-image: url('{{ featured_img.image.url }}');
         background-size: cover;
+        background: #000 url('{{ featured_img.image.url }}');
+        background-position-y: -190px;
+            {% if featured_img.text_css_color %}color: {{ featured_img.text_css_color }}{% endif %}
         {% endif %}
     }
     {% endblock %}
@@ -25,16 +27,18 @@
                 <div class="jumbotron">
                     <div class="container">
                         <div class="row">
-                            <div class="col-md-6">
+                            <div class="{% if featured_img.make_image_background %}col-md-12 text-center{% else %}col-md-6{% if featured_img.text_right %} pull-right{% endif %}{% endif %}">
                                 <h2>{{ featured_img.product.title }}</h2>
                                 <p>{{ featured_img.product.description }}</p>
                                 <a href="{{ featured_img.product.get_absolute_url }}" class="btn btn-primary btn-lg">
                                     Ver detalles
                                 </a>
                             </div>
+                            {% if not featured_img.make_image_background %}
                             <div class="col-md-6">
                                 <img src="{{ featured_img.image.url }}" alt="{{ featured_img.product.title }}" class="img-responsive">
                             </div>
+                            {% endif %}
                         </div>
                     </div>
                 </div>

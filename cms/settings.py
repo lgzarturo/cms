@@ -29,6 +29,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'games.apps.GamesConfig',
     'web.apps.WebConfig',
     'products.apps.ProductsConfig',
     'newsletters.apps.NewslettersConfig',
