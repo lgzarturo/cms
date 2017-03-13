@@ -171,3 +171,25 @@ small {
 #videos img {
     width: 100px;
 }
+
+#top-news .caption h4, .media-body h4 {
+    line-height: 1.1em;
+}
+
+#top-news .caption p {
+    margin-top: 1em;
+    line-height: 1.4em;
+}
+
+#top-news .caption p:last-child, .media-body p:last-child {
+    margin-bottom: 0;
+}
+
+.media {
+    padding: .6em;
+    border-bottom: 1px dashed #1abc9c;
+}
+
+div .media:last-child {
+    border-bottom: none;
+}

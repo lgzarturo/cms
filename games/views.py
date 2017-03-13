@@ -29,9 +29,14 @@ def index(request):
 def game_detail(request, slug=None):
     instance = get_object_or_404(Game, slug=slug)
     context = {
-        "title": "",
         "instance": instance
     }
     return render(request, "games/detail.html", context)
 
 
+def news_detail(request, slug=None):
+    instance = get_object_or_404(News, slug=slug)
+    context = {
+        "instance": instance
+    }
+    return render(request, "games/news_detail.html", context)

@@ -193,6 +193,12 @@ class News(models.Model):
     def __unicode__(self):
         return self.title
 
+    def get_absolute_url(self):
+        return reverse("game:news_detail", kwargs={"slug": self.slug})
+
+    def get_image_url(self):
+        return self.image.url
+
     class Meta:
         ordering = ["-timestamp", "-updated"]
 

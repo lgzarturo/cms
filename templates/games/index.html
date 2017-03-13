@@ -88,7 +88,7 @@
                                     <h4>{{ object.title }}</h4>
                                     <p>{{ object.excerpt }}</p>
                                     <p>
-                                        <a href="{{ object.link }}" class="btn btn-danger" role="button">
+                                        <a href="{{ object.get_absolute_url }}" class="btn btn-danger" role="button">
                                             <strong>VER MÁS</strong>
                                         </a>
                                     </p>
@@ -105,13 +105,13 @@
                         {% for object in news %}
                         <div class="media" id="news">
                             <div class="media-left media-top">
-                                <a href="{{ object.link }}">
+                                <a href="{{ object.get_absolute_url }}">
                                     <img class="media-object img-responsive" src="{{ object.image.url }}" alt="Gears of War 4 - Revisión y Noticias">
                                 </a>
                             </div>
                             <div class="media-body">
                                 <h4 class="media-heading">
-                                    <a href="{{ object.link }}">
+                                    <a href="{{ object.get_absolute_url }}">
                                         {{ object.title }}
                                     </a>
                                 </h4>
