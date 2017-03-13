@@ -48,6 +48,7 @@ class Article(models.Model):
         ordering = ["-timestamp", "-updated"]
 
 
+# Creacion de los campos slug para los modelos
 def create_slug(instance, new_slug=None):
     slug = slugify(instance.title)
     if new_slug is not None:

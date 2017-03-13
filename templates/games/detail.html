@@ -1,0 +1,32 @@
+{% extends 'layout/base.html' %}
+{% load urlfy %}
+
+{% block title %}
+    {{ object.title }} | {{ block.super }}
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-sm-8">
+            <h1>{{ instance.name }}</h1>
+        
+            {% if instance.get_image_url %}
+            <div>
+                <img src="{{ instance.get_image_url }}" class="img-responsive">
+            </div>
+            {% endif %}
+
+            <p class="lead">
+                {% autoescape off %} {{ instance.description }} {% endautoescape %}
+            </p>
+        </div>
+
+        <!-- Game sidebar -->
+        <div class="col-sm-4">
+            Website: {{ instance.website }} <br>
+            Release: {{ instance.release_date }}
+        </div>
+
+    </div>
+
+{% endblock %}

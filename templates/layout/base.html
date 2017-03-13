@@ -33,10 +33,97 @@
     }(document, 'script', 'facebook-jssdk'));</script>
     {% google_analytics %}
 
-    <div class="container">
+    {% block menu-container %}
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                    <span class="sr-only">Menu</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">MiraElJuego</a>
+            </div>
+            <div id="navbar" class="navbar-collapse collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">Action</a></li>
+                            <li><a href="#">Another action</a></li>
+                            <li><a href="#">Something else here</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li class="dropdown-header">Nav header</li>
+                            <li><a href="#">Separated link</a></li>
+                            <li><a href="#">One more separated link</a></li>
+                        </ul>
+                    </li>
+                    <li class="active"><a href="./">Fixed top <span class="sr-only">(current)</span></a></li>
+                </ul>
+            </div><!--/.nav-collapse -->
+        </div>
+    </nav>
+    {% endblock %}
+
+    <div class="row section-spacing section-blue-ocean">
+        {% block header-container %}{% endblock %}
+    </div>
+
+    {% block pre-container %}{% endblock %}
+
+    <div class="row">
+        <div class="container">
         {% include "tags/messages.html" %}
 
         {% block content %}{% endblock %}
+        </div>
+    </div>
+
+    {% block post-container %}{% endblock %}
+
+    <div class="row footer section-spacing section-blue-ocean">
+        {% block footer-container %}{% endblock %}
+        <div class="container">
+            <div class="section-social-bar clearfix">
+                <div class="col-md-3">
+                    <span class="fa-stack fa-lg color-red-light">
+                        <i class="fa fa-circle fa-stack-2x"></i>
+                        <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                    </span>&nbsp;
+                    <a href="#">twitter.com/MiraElJuego</a>
+                </div>
+                <div class="col-md-3">
+                    <span class="fa-stack fa-lg color-red-light">
+                        <i class="fa fa-circle fa-stack-2x"></i>
+                        <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+                    </span>&nbsp;
+                    <a href="#">facebook.com/MiraElJuego</a></div>
+                <div class="col-md-3">
+                    <span class="fa-stack fa-lg color-red-light">
+                        <i class="fa fa-circle fa-stack-2x"></i>
+                        <i class="fa fa-youtube fa-stack-1x fa-inverse"></i>
+                    </span>&nbsp;
+                    <a href="#">youtube.com/MiraElJuego</a></div>
+                <div class="col-md-3">
+                    <span class="fa-stack fa-lg color-red-light">
+                        <i class="fa fa-circle fa-stack-2x"></i>
+                        <i class="fa fa-flag fa-stack-1x fa-inverse"></i>
+                    </span>&nbsp;
+                    <a href="#">Famisoft</a></div>
+            </div>
+            <div class="section-footer">
+                <div class="col-md-7">MiraElJuego es una marca registrada de <a href="#">famisoft.com</a></div>
+                <div class="col-md-5">
+                    <span class="pull-right">
+                        <a href="#">Anunciate</a> |
+                        <a href="#">Contacto</a> |
+                        <a href="#">Terminos y Condiciones</a> |
+                        <a href="#">Politica de privacidad</a>
+                    </span>
+                </div>
+            </div>
+        </div>
     </div>
 
     {% include "tags/javascript.html" %}

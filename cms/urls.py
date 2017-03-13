@@ -12,6 +12,7 @@ urlpatterns = [
     url(r'^products/', include("products.urls", namespace="product")),
     url(r'^categories/', include("products.urls_categories", namespace="category")),
     url(r'^newsletter/', include("newsletters.urls", namespace="newsletter")),
+    url(r'^games/', include("games.urls", namespace="game")),
 ]
 
 

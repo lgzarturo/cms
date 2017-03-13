@@ -1,0 +1,235 @@
+{% extends 'layout/base.html' %}
+
+{% block title %}
+    {{ title }} | {{ block.super }}
+{% endblock %}
+
+<style>
+    {% block style %}
+    {% endblock %}
+</style>
+
+{% block header-container %}
+
+    <div class="container">
+        <div class="col-sm-12">
+            <h1>{{ title }}</h1>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block content %}
+
+    <div class="row section-spacing">
+        <div class="col-md-9">
+
+            <div class="col-md-12">
+                <!-- Featured games -->
+                {% if featured_games %}
+                <div id="featured_games" class="carousel slide" data-ride="featured_games">
+
+                    <ol class="carousel-indicators">
+                        {% for indicator in featured_games %}
+                        <li data-target="#featured_games" data-slide-to="{{ indicator.id }}"></li>
+                        {% endfor %}
+                    </ol>
+
+                    {% for featured in featured_games %}
+                    <div class="carousel-inner" role="listbox">
+                        <div class="item active">
+                            <img src="{{ featured.image.url }}" alt="{{ featured.game.name }}">
+                            <div class="carousel-caption">
+                                {% if featured.title %}
+                                <h3 class="alternative-title">{{ featured.title }}</h3>
+                                {% endif %}
+                                <p>
+                                    {% if featured.description %}
+                                    {{ featured.description }}
+                                    {% endif %}
+                                    {% if featured.link %}
+                                    <br/>
+                                    <a href="{{ featured.link }}" class="btn btn-default btn-lg">Saber mas</a>
+                                    {% elif featured.game %}
+                                    <br/>
+                                    <a href="{{ featured.game.get_absolute_url }}" class="btn btn-default btn-lg">Saber mas</a>
+                                    {% endif %}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+
+                    <!-- Controls -->
+                    <a class="left carousel-control" href="#featured_games" role="button" data-slide="prev">
+                        <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                        <span class="sr-only">Anterior</span>
+                    </a>
+                    <a class="right carousel-control" href="#featured_games" role="button" data-slide="next">
+                        <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                        <span class="sr-only">Siguiente</span>
+                    </a>
+                </div>
+                {% endif %}
+            </div>
+
+            <div class="col-md-12">
+                <!-- Top News -->
+                {% if top_news %}
+                <div class="row inner-section">
+
+                    {% for object in top_news %}
+                    <div class="col-md-4">
+                        <div class="thumbnail">
+                            <img src="{{ object.image.url }}" alt="{{ object.title }}">
+                            <div class="caption">
+                                <h4>{{ object.title }}</h4>
+                                <p>{{ object.excerpt }}</p>
+                                <p>
+                                    <a href="{{ object.link }}" class="btn btn-danger" role="button">
+                                        <strong>VER MÁS</strong>
+                                    </a>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                    <div class="clearfix"></div>
+                </div>
+                {% endif %}
+
+                {% if news %}
+                <!-- News -->
+                <div class="row inner-section">
+                    <div class="col-md-12">
+                        {% for object in news %}
+                        <div class="media">
+                            <div class="media-left media-top">
+                                <a href="{{ object.link }}">
+                                    <img class="media-object img-responsive" src="{{ object.image.url }}" alt="Gears of War 4 - Revisión y Noticias">
+                                </a>
+                            </div>
+                            <div class="media-body">
+                                <h4 class="media-heading">
+                                    <a href="{{ object.link }}">
+                                        {{ object.title }}
+                                    </a>
+                                </h4>
+                                <p>
+                                    {{ object.excerpt }}
+                                </p>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                {% endif %}
+
+            </div>
+
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h3>Comunidad Facebook</h3>
+                    </div>
+                    <div class="col-md-6">
+                        <h3>Proximos lanzamientos</h3>
+                        {% if launch_games %}
+                            <!-- Launch games -->
+                            {% for object in launch_games %}
+                            <div class="media">
+                                <div class="media-left media-top">
+                                    <img class="media-object img-responsive" src="{{ object.image.url }}" alt="{{ object.date }}">
+                                </div>
+                                <div class="media-body">
+
+                                    <h4 class="media-heading">
+                                        {% if object.game %}
+                                            <a href="{{ object.game.get_absolute_url }}">{{ object.game.name }}</a>
+                                        {% elif object.title %}
+                                            {{ object.title }}
+                                        {% else %}
+                                            Secreto
+                                        {% endif %}
+                                    </h4>
+
+                                    <p>
+                                        {% if object.game.tags %}
+                                        {% for tag in object.game.tags.names %}
+                                            <span class="label label-default">{{ tag }}</span>
+                                        {% endfor %}<br />
+                                        {% endif %}
+                                        {{ object.date }}
+                                    </p>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+
+        <div class="col-md-3">
+            <div class="well">
+                <h4>Nosotros</h4>
+                <p>
+                    Página dedicada a los Videojuegos, Cine y Comics. Escribimos artículos, reseñas y gameplays del mundillo Geek.
+                </p>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block post-container %}
+
+    <div class="row section-spacing section-red">
+        <div class="container">
+            <div class="col-md-12">
+                <h3>MiraElJuego Play TV</h3>
+            </div>
+            <div class="col-md-7">
+                {% if video %}
+                <div class="embed-responsive embed-responsive-16by9">
+                    <iframe src="{{ video.url_youtube }}"
+                            class="embed-responsive-item"
+                            frameborder="0"
+                            allowfullscreen="">
+                    </iframe>
+                </div>
+                {% endif %}
+            </div>
+            <div class="col-md-5">
+                {% if videos %}
+                    <!-- Videos -->
+                    {% for object in videos %}
+                    <div class="media">
+                        <div class="media-left">
+                            <a href="{{ object.url_youtube }}">
+                                <img class="media-object" src="{{ object.featured_image.url }}" alt="{{ object.title }}">
+                            </a>
+                        </div>
+                        <div class="media-body">
+                            {% if object.game %}
+                            <h4 class="media-heading">
+                                <a href="{{ object.game.get_absolute_url }}">
+                                    {{ object.game.name }}
+                                </a>
+                            </h4>
+                            {% endif %}
+                            <p>
+                                <span class="label label-danger">{{ object.type_video }}</span><br>
+                                {{ object.title }}
+                            </p>
+                        </div>
+                    </div>
+                    {% endfor %}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
