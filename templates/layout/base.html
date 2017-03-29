@@ -66,26 +66,22 @@
     </nav>
     {% endblock %}
 
-    <div class="row section-spacing section-blue-ocean">
+    <div class="section-spacing section-blue-ocean">
         {% block header-container %}{% endblock %}
     </div>
 
     {% block pre-container %}{% endblock %}
 
-    <div class="row">
-        <div class="container">
-        {% include "tags/messages.html" %}
+    {% include "tags/messages.html" %}
 
-        {% block content %}{% endblock %}
-        </div>
-    </div>
+    {% block content %}{% endblock %}
 
     {% block post-container %}{% endblock %}
 
-    <div class="row footer section-spacing section-blue-ocean">
+    <div class="footer section-spacing section-blue-ocean">
         {% block footer-container %}{% endblock %}
         <div class="container">
-            <div class="section-social-bar clearfix">
+            <div class="row section-social-bar">
                 <div class="col-md-3">
                     <span class="fa-stack fa-lg color-red-light">
                         <i class="fa fa-circle fa-stack-2x"></i>
@@ -112,7 +108,7 @@
                     </span>&nbsp;
                     <a href="#">Famisoft</a></div>
             </div>
-            <div class="section-footer">
+            <div class="row section-footer">
                 <div class="col-md-7">MiraElJuego es una marca registrada de <a href="#">famisoft.com</a></div>
                 <div class="col-md-5">
                     <span class="pull-right">

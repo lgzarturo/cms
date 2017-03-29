@@ -12,8 +12,10 @@
 {% block header-container %}
 
     <div class="container">
-        <div class="col-sm-12">
-            <h1>{{ title }}</h1>
+        <div class="row">
+            <div class="col-sm-12">
+                <h1>{{ title }}</h1>
+            </div>
         </div>
     </div>
 
@@ -21,85 +23,82 @@
 
 {% block content %}
 
-    <div class="row section-spacing">
-        <div class="col-md-9">
+    <div class="container">
+        <div class="row section-spacing">
+            <div class="col-sm-8">
 
-            <div class="col-md-12">
-                <!-- Featured games -->
-                {% if featured_games %}
-                <div id="featured_games" class="carousel slide" data-ride="featured_games">
+                <div id="featured-games">
+                    <!-- Featured games -->
+                    {% if featured_games %}
+                    <div id="featured_games" class="carousel slide" data-ride="featured_games">
 
-                    <ol class="carousel-indicators">
-                        {% for indicator in featured_games %}
-                        <li data-target="#featured_games" data-slide-to="{{ indicator.id }}"></li>
-                        {% endfor %}
-                    </ol>
+                        <ol class="carousel-indicators">
+                            {% for indicator in featured_games %}
+                            <li data-target="#featured_games" data-slide-to="{{ indicator.id }}"></li>
+                            {% endfor %}
+                        </ol>
 
-                    {% for featured in featured_games %}
-                    <div class="carousel-inner" role="listbox">
-                        <div class="item active">
-                            <img src="{{ featured.image.url }}" alt="{{ featured.game.name }}">
-                            <div class="carousel-caption">
-                                {% if featured.title %}
-                                <h3 class="alternative-title">{{ featured.title }}</h3>
-                                {% endif %}
-                                <p>
-                                    {% if featured.description %}
-                                    {{ featured.description }}
+                        <div class="carousel-inner" role="listbox">
+                        {% for featured in featured_games %}
+                            <div class="item{% if featured_games.first == featured %} active{% endif %}">
+                                <img src="{{ featured.image.url }}" alt="{{ featured.game.name }}">
+                                <div class="carousel-caption">
+                                    {% if featured.title %}
+                                    <h3 class="alternative-title">{{ featured.title }}</h3>
                                     {% endif %}
-
-                                    <br/>
+                                    <p>
+                                        {% if featured.description %}
+                                        {{ featured.description }}
+                                        {% endif %}
+                                        <br/>
                                     <a href="{{ featured.get_absolute_url }}" class="btn btn-default btn-lg">Saber mas</a>
-                                </p>
+                                    </p>
+                                </div>
+                            </div>
+                        {% endfor %}
+                        </div>
+
+                        <!-- Controls -->
+                        <a class="left carousel-control" href="#featured_games" role="button" data-slide="prev">
+                            <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                            <span class="sr-only">Anterior</span>
+                        </a>
+                        <a class="right carousel-control" href="#featured_games" role="button" data-slide="next">
+                            <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                            <span class="sr-only">Siguiente</span>
+                        </a>
+                    </div>
+                    {% endif %}
+                </div>
+
+                <div id="top-news">
+                    <!-- Top News -->
+                    {% if top_news %}
+                    <div class="row inner-section">
+                        {% for object in top_news %}
+                        <div class="col-md-4">
+                            <div class="thumbnail">
+                                <img src="{{ object.image.url }}" alt="{{ object.title }}">
+                                <div class="caption">
+                                    <h4>{{ object.title }}</h4>
+                                    <p>{{ object.excerpt }}</p>
+                                    <p>
+                                        <a href="{{ object.get_absolute_url }}" class="btn btn-danger" role="button">
+                                            <strong>VER MÁS</strong>
+                                        </a>
+                                    </p>
+                                </div>
                             </div>
                         </div>
+                        {% endfor %}
                     </div>
-                    {% endfor %}
+                    {% endif %}
 
-                    <!-- Controls -->
-                    <a class="left carousel-control" href="#featured_games" role="button" data-slide="prev">
-                        <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-                        <span class="sr-only">Anterior</span>
-                    </a>
-                    <a class="right carousel-control" href="#featured_games" role="button" data-slide="next">
-                        <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-                        <span class="sr-only">Siguiente</span>
-                    </a>
-                </div>
-                {% endif %}
-            </div>
-
-            <div class="col-md-12">
-                <!-- Top News -->
-                {% if top_news %}
-                <div class="row inner-section">
-
-                    {% for object in top_news %}
-                    <div class="col-md-4">
-                        <div class="thumbnail">
-                            <img src="{{ object.image.url }}" alt="{{ object.title }}">
-                            <div class="caption">
-                                <h4>{{ object.title }}</h4>
-                                <p>{{ object.excerpt }}</p>
-                                <p>
-                                    <a href="{{ object.get_absolute_url }}" class="btn btn-danger" role="button">
-                                        <strong>VER MÁS</strong>
-                                    </a>
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                    {% endfor %}
-                    <div class="clearfix"></div>
-                </div>
-                {% endif %}
-
-                {% if news %}
-                <!-- News -->
-                <div class="row inner-section">
-                    <div class="col-md-12">
+                    {% if news %}
+                    <!-- News -->
+                    <div class="inner-section">
                         {% for object in news %}
-                        <div class="media">
+                        <div class="media" id="news">
                             <div class="media-left media-top">
                                 <a href="{{ object.get_absolute_url }}">
                                     <img class="media-object img-responsive" src="{{ object.image.url }}" alt="Gears of War 4 - Revisión y Noticias">
@@ -118,13 +117,11 @@
                         </div>
                         {% endfor %}
                     </div>
+                    {% endif %}
+
                 </div>
-                {% endif %}
 
-            </div>
-
-            <div class="col-md-12">
-                <div class="row">
+                <div id="launch-games" class="row">
                     <div class="col-md-6">
                         <h3>Comunidad Facebook</h3>
                     </div>
@@ -135,7 +132,7 @@
                             {% for object in launch_games %}
                             <div class="media">
                                 <div class="media-left media-top">
-                                    <img class="media-object img-responsive" src="{{ object.image.url }}" alt="{{ object.date }}">
+                                    <img class="media-object" src="{{ object.image.url }}" alt="{{ object.date }}">
                                 </div>
                                 <div class="media-body">
 
@@ -165,15 +162,13 @@
                 </div>
             </div>
 
-        </div>
-
-
-        <div class="col-md-3">
-            <div class="well">
-                <h4>Nosotros</h4>
-                <p>
-                    Página dedicada a los Videojuegos, Cine y Comics. Escribimos artículos, reseñas y gameplays del mundillo Geek.
-                </p>
+            <div class="col-sm-3 col-sm-offset-1">
+                <div class="well">
+                    <h4>Nosotros</h4>
+                    <p>
+                        Página dedicada a los Videojuegos, Cine y Comics. Escribimos artículos, reseñas y gameplays del mundillo Geek.
+                    </p>
+                </div>
             </div>
         </div>
     </div>
@@ -182,48 +177,55 @@
 
 {% block post-container %}
 
-    <div class="row section-spacing section-red">
+
+    <div class="section-spacing section-red">
         <div class="container">
-            <div class="col-md-12">
-                <h3>MiraElJuego Play TV</h3>
-            </div>
-            <div class="col-md-7">
-                {% if video %}
-                <div class="embed-responsive embed-responsive-16by9">
-                    <iframe src="{{ video.url_youtube }}"
-                            class="embed-responsive-item"
-                            frameborder="0"
-                            allowfullscreen="">
-                    </iframe>
+            <div class="row">
+                <div class="col-md-12">
+                    <h3>MiraElJuego Play TV</h3>
                 </div>
-                {% endif %}
             </div>
-            <div class="col-md-5">
-                {% if videos %}
-                    <!-- Videos -->
-                    {% for object in videos %}
-                    <div class="media">
-                        <div class="media-left">
-                            <a href="{{ object.url_youtube }}">
-                                <img class="media-object" src="{{ object.featured_image.url }}" alt="{{ object.title }}">
-                            </a>
-                        </div>
-                        <div class="media-body">
-                            {% if object.game %}
-                            <h4 class="media-heading">
-                                <a href="{{ object.game.get_absolute_url }}">
-                                    {{ object.game.name }}
-                                </a>
-                            </h4>
-                            {% endif %}
-                            <p>
-                                <span class="label label-danger">{{ object.type_video }}</span><br>
-                                {{ object.title }}
-                            </p>
-                        </div>
+
+            <div class="row">
+                <div class="col-md-7">
+                    {% if video %}
+                    <div class="embed-responsive embed-responsive-16by9">
+                        <iframe src="{{ video.url_youtube }}"
+                                id="lastest-video"
+                                class="embed-responsive-item"
+                                frameborder="0"
+                                allowfullscreen="">
+                        </iframe>
                     </div>
-                    {% endfor %}
-                {% endif %}
+                    {% endif %}
+                </div>
+                <div class="col-md-5">
+                    {% if videos %}
+                        <!-- Videos -->
+                        {% for object in videos %}
+                        <div class="media" id="videos">
+                            <div class="media-left">
+                                <a href="{{ object.url_youtube }}">
+                                    <img class="media-object" src="{{ object.featured_image.url }}" alt="{{ object.title }}">
+                                </a>
+                            </div>
+                            <div class="media-body">
+                                {% if object.game %}
+                                <h4 class="media-heading">
+                                    <a href="{{ object.game.get_absolute_url }}">
+                                        {{ object.game.name }}
+                                    </a>
+                                </h4>
+                                {% endif %}
+                                <p>
+                                    <span class="label label-danger">{{ object.type_video }}</span><br>
+                                    {{ object.title }}
+                                </p>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    {% endif %}
+                </div>
             </div>
         </div>
     </div>

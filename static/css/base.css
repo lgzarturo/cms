@@ -7,6 +7,7 @@ body {
     -o-font-feature-settings: "kern" 1;
     font-feature-settings: "kern" 1;
     font-kerning: normal;
+    margin-top: 3.3em;
 }
 
 h1, .h1, h2, .h2, h3, .h3,
@@ -15,6 +16,8 @@ h4, .h4, h5, .h5, h6, .h6 {
     line-height: 2.0;
     letter-spacing: -.04em;
     word-spacing: .2em;
+    margin: 0;
+    padding: 0;
 }
 
 h1,
@@ -150,4 +153,43 @@ small {
 .section-social-bar a:hover {
     border-bottom: 1px dashed #fff;
     padding-bottom: 2px;
+}
+
+.thumbnail img, .media img, #lastest-video {
+    border-radius: 6px;
+}
+
+
+#launch-games .media img {
+    width: 72px;
+}
+
+#news img {
+    width: 135px;
+}
+
+#videos img {
+    width: 100px;
+}
+
+#top-news .caption h4, .media-body h4 {
+    line-height: 1.1em;
+}
+
+#top-news .caption p {
+    margin-top: 1em;
+    line-height: 1.4em;
+}
+
+#top-news .caption p:last-child, .media-body p:last-child {
+    margin-bottom: 0;
+}
+
+.media {
+    padding: .6em;
+    border-bottom: 1px dashed #1abc9c;
+}
+
+div .media:last-child {
+    border-bottom: none;
 }
