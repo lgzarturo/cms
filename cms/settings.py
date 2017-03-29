@@ -36,10 +36,12 @@ INSTALLED_APPS = [
     'articles.apps.ArticlesConfig',
     'taggit',
     'taggit_helpers',
+    'taggit_labels',
     'analytical',
     'crispy_forms',
     'django_summernote',
-    'grappelli',
+    'jet.dashboard',
+    'jet',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -71,14 +73,24 @@ TEMPLATES = [
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
-                'django.template.context_processors.debug',
-                'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
+                'django.template.context_processors.debug',
+                'django.template.context_processors.i18n',
+                'django.template.context_processors.media',
+                'django.template.context_processors.static',
+                'django.template.context_processors.tz',
                 'django.contrib.messages.context_processors.messages',
+                'django.template.context_processors.request'
             ],
         },
     },
 ]
+
+JET_DEFAULT_THEME = 'light-gray'
+
+JET_SIDE_MENU_COMPACT = True
+
+JET_CHANGE_FORM_SIBLING_LINKS = True
 
 WSGI_APPLICATION = 'cms.wsgi.application'
 
@@ -137,14 +149,6 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static_cdn')
 MEDIA_URL = '/media/'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media_cdn')
-
-GRAPPELLI_ADMIN_TITLE = 'CMS Contacto.top'
-
-GRAPPELLI_AUTOCOMPLETE_LIMIT = 10
-
-GRAPPELLI_AUTOCOMPLETE_SEARCH_FIELDS = 10
-
-GRAPPELLI_SWITCH_USER = False
 
 CRISPY_TEMPLATE_PACK = 'bootstrap3'
 

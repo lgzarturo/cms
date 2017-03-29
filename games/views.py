@@ -35,3 +35,10 @@ def game_detail(request, slug=None):
     return render(request, "games/detail.html", context)
 
 
+def news_detail(request, slug=None):
+    instance = get_object_or_404(News, slug=slug)
+    context = {
+        "title": "",
+        "instance": instance
+    }
+    return render(request, "games/news_detail.html", context)

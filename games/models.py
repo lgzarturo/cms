@@ -6,6 +6,7 @@ from django.db import models
 from django.db.models.signals import pre_save
 from django.utils.text import slugify
 from taggit.managers import TaggableManager
+from django.utils.translation import ugettext_lazy as _
 
 
 def image_platform_upload_to(instance, filename):
@@ -17,15 +18,20 @@ def image_platform_upload_to(instance, filename):
 
 class Platform(models.Model):
     slug = models.SlugField(unique=True)
-    name = models.CharField(max_length=120)
+    name = models.CharField(max_length=120, verbose_name=_("Nombre"))
     image = models.ImageField(upload_to=image_platform_upload_to,
                               null=True,
                               blank=True,
                               width_field="width_field",
-                              height_field="height_field")
+                              height_field="height_field",
+                              verbose_name=_("Logotipo"))
     width_field = models.IntegerField(default=0)
     height_field = models.IntegerField(default=0)
-    description = models.TextField(null=True, blank=True)
+    description = models.TextField(null=True, blank=True, verbose_name=_("Descripción"))
+
+    class Meta:
+        verbose_name = _("Plataforma")
+        verbose_name_plural = _("Plataformas")
 
     def __unicode__(self):
         return self.name
@@ -61,24 +67,30 @@ class Game(models.Model):
         ('ADV', 'Aventura'),
     )
     slug = models.SlugField(unique=True)
-    name = models.CharField(max_length=120)
+    name = models.CharField(max_length=120, verbose_name=_("Nombre"))
     image = models.ImageField(upload_to=image_game_upload_to,
                               null=True,
                               blank=True,
                               width_field="width_field",
-                              height_field="height_field")
+                              height_field="height_field",
+                              verbose_name=_("Foto principal"))
     width_field = models.IntegerField(default=0)
     height_field = models.IntegerField(default=0)
-    description = models.TextField(null=True, blank=True)
-    rate = models.IntegerField(default=0, null=True)
-    website = models.URLField(null=True, blank=True)
-    release_date = models.DateField(null=True)
-    engine = models.CharField(max_length=40, null=True, blank=True)
-    type_game = models.CharField(max_length=3, choices=TYPE_GAMES, default='NA')
-    genre = models.CharField(max_length=3, choices=GENRE_GAMES, default='NA')
-    updated = models.DateTimeField(auto_now=True, auto_now_add=False)
-    timestamp = models.DateTimeField(auto_now=False, auto_now_add=True)
+    description = models.TextField(null=True, blank=True, verbose_name=_("Descripción"))
+    rate = models.IntegerField(default=0, null=True, verbose_name=_("Calificación"))
+    website = models.URLField(null=True, blank=True, verbose_name=_("Sitio Web"))
+    release_date = models.DateField(null=True, verbose_name=_("Fecha de lanzamiento"))
+    engine = models.CharField(max_length=40, null=True, blank=True, verbose_name=_("Motor Gráfico"))
+    type_game = models.CharField(max_length=3, choices=TYPE_GAMES, default='NA', verbose_name=_("Tipo de Juego"))
+    genre = models.CharField(max_length=3, choices=GENRE_GAMES, default='NA', verbose_name=_("Género"))
+    updated = models.DateTimeField(auto_now=True, auto_now_add=False, verbose_name=_("Última Actualización"))
+    timestamp = models.DateTimeField(auto_now=False, auto_now_add=True, verbose_name=_("Fecha de Creación"))
     tags = TaggableManager()
+
+    class Meta:
+        ordering = ["-timestamp", "-updated"]
+        verbose_name = _("Juego")
+        verbose_name_plural = _("Juegos")
 
     def __unicode__(self):
         return self.name
@@ -91,9 +103,6 @@ class Game(models.Model):
         if img:
             return img.picture.url
         return self.image.url
-
-    class Meta:
-        ordering = ["-timestamp", "-updated"]
 
 
 def image_game_launch_upload_to(instance, filename):
@@ -109,16 +118,21 @@ def image_game_launch_upload_to(instance, filename):
 
 
 class LaunchGame(models.Model):
-    title = models.CharField(max_length=120, null=True, blank=True)
+    title = models.CharField(max_length=120, null=True, blank=True, verbose_name=_("Título"))
     image = models.ImageField(upload_to=image_game_launch_upload_to,
                               null=False,
                               blank=False,
                               width_field="width_field",
-                              height_field="height_field")
+                              height_field="height_field",
+                              verbose_name=_("Imágen del Juego"))
     width_field = models.IntegerField(default=0)
     height_field = models.IntegerField(default=0)
-    date = models.DateField()
-    game = models.ForeignKey(Game, null=True, blank=True)
+    date = models.DateField(verbose_name=_("Fecha"))
+    game = models.ForeignKey(Game, null=True, blank=True, verbose_name=_("Juego"))
+
+    class Meta:
+        verbose_name = _("Lanzamiento")
+        verbose_name_plural = _("Lanzamientos")
 
     def __unicode__(self):
         if self.game:
@@ -128,6 +142,10 @@ class LaunchGame(models.Model):
         else:
             title = self.image.name
         return title
+
+    def get_absolute_url(self):
+        if self.game:
+            return self.game.get_absolute_url()
 
 
 def image_game_featured_upload_to(instance, filename):
@@ -155,6 +173,10 @@ class FeaturedGame(models.Model):
     description = models.TextField(blank=True, null=True)
     game = models.ForeignKey(Game, null=True, blank=True)
 
+    class Meta:
+        verbose_name = _("Juego Promocionado")
+        verbose_name_plural = _("Juegos Promocionados")
+
     def __unicode__(self):
         if self.game:
             title = self.game.name
@@ -163,6 +185,12 @@ class FeaturedGame(models.Model):
         else:
             title = self.image.name
         return title
+
+    def get_absolute_url(self):
+        if self.game:
+            return self.game.get_absolute_url()
+        else:
+            return self.link
 
 
 def image_news_upload_to(instance, filename):
@@ -190,11 +218,16 @@ class News(models.Model):
     timestamp = models.DateTimeField(auto_now=False, auto_now_add=True)
     tags = TaggableManager()
 
+    class Meta:
+        ordering = ["-timestamp", "-updated"]
+        verbose_name = _("Noticia")
+        verbose_name_plural = _("Noticias")
+
     def __unicode__(self):
         return self.title
 
-    class Meta:
-        ordering = ["-timestamp", "-updated"]
+    def get_absolute_url(self):
+        return reverse("game:news", kwargs={"slug": self.slug})
 
 
 def image_video_upload_to(instance, filename):
@@ -233,6 +266,10 @@ class Video(models.Model):
     updated = models.DateTimeField(auto_now=True, auto_now_add=False)
     timestamp = models.DateTimeField(auto_now=False, auto_now_add=True)
 
+    class Meta:
+        verbose_name = _("Video")
+        verbose_name_plural = _("Videos")
+
     def __unicode__(self):
         return self.title
 
@@ -263,6 +300,10 @@ class Picture(models.Model):
     updated = models.DateTimeField(auto_now=True, auto_now_add=False)
     timestamp = models.DateTimeField(auto_now=False, auto_now_add=True)
 
+    class Meta:
+        verbose_name = _("Imágen")
+        verbose_name_plural = _("Imágenes")
+
     def __unicode__(self):
         return self.title
 
@@ -278,9 +319,12 @@ class GalleryGame(models.Model):
 
     class Meta:
         ordering = ["-timestamp", "-updated"]
+        verbose_name = _("Galería")
+        verbose_name_plural = _("Galerías")
 
     def __unicode__(self):
         return "%s | '%s'" % (self.title, self.game.name)
+
 
 OCCUPATIONS = (
     ('NA', 'N/A'),
@@ -299,6 +343,10 @@ class PersonIndustry(models.Model):
     nationality = models.CharField(max_length=100, null=True, blank=True)
     tags = TaggableManager()
 
+    class Meta:
+        verbose_name = _("Profesionista")
+        verbose_name_plural = _("Profesionistas")
+
     def __unicode__(self):
         return self.name
 
@@ -307,6 +355,10 @@ class DeveloperGame(models.Model):
     game = models.ForeignKey(Game)
     person = models.ForeignKey(PersonIndustry)
     kind = models.CharField(max_length=3, choices=OCCUPATIONS)
+
+    class Meta:
+        verbose_name = _("Desarrollador")
+        verbose_name_plural = _("Desarrolladores")
 
     def __unicode__(self):
         return "%s | %s (%s)" % (self.person.name, self.game.name, self.kind)
@@ -331,10 +383,18 @@ class Classification(models.Model):
     width_field = models.IntegerField(default=0)
     height_field = models.IntegerField(default=0)
 
+    class Meta:
+        verbose_name = _("Clasificación")
+        verbose_name_plural = _("Clasificaciones")
+
 
 class ClassificationGame(models.Model):
     game = models.ForeignKey(Game)
     classification = models.ForeignKey(Classification)
+
+    class Meta:
+        verbose_name = _("Clasificación")
+        verbose_name_plural = _("Clasificaciones")
 
     def __unicode__(self):
         return "%s | %s" % (self.classification.name, self.game.name)
@@ -343,6 +403,10 @@ class ClassificationGame(models.Model):
 class PlatformGame(models.Model):
     game = models.ForeignKey(Game)
     platform = models.ForeignKey(Platform)
+
+    class Meta:
+        verbose_name = _("Plataforma")
+        verbose_name_plural = _("Plataformas")
 
     def __unicode__(self):
         return "%s | %s" % (self.platform.name, self.game.name)

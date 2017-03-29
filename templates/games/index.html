@@ -47,13 +47,9 @@
                                     {% if featured.description %}
                                     {{ featured.description }}
                                     {% endif %}
-                                    {% if featured.link %}
+
                                     <br/>
-                                    <a href="{{ featured.link }}" class="btn btn-default btn-lg">Saber mas</a>
-                                    {% elif featured.game %}
-                                    <br/>
-                                    <a href="{{ featured.game.get_absolute_url }}" class="btn btn-default btn-lg">Saber mas</a>
-                                    {% endif %}
+                                    <a href="{{ featured.get_absolute_url }}" class="btn btn-default btn-lg">Saber mas</a>
                                 </p>
                             </div>
                         </div>
@@ -86,7 +82,7 @@
                                 <h4>{{ object.title }}</h4>
                                 <p>{{ object.excerpt }}</p>
                                 <p>
-                                    <a href="{{ object.link }}" class="btn btn-danger" role="button">
+                                    <a href="{{ object.get_absolute_url }}" class="btn btn-danger" role="button">
                                         <strong>VER MÁS</strong>
                                     </a>
                                 </p>
@@ -105,13 +101,13 @@
                         {% for object in news %}
                         <div class="media">
                             <div class="media-left media-top">
-                                <a href="{{ object.link }}">
+                                <a href="{{ object.get_absolute_url }}">
                                     <img class="media-object img-responsive" src="{{ object.image.url }}" alt="Gears of War 4 - Revisión y Noticias">
                                 </a>
                             </div>
                             <div class="media-body">
                                 <h4 class="media-heading">
-                                    <a href="{{ object.link }}">
+                                    <a href="{{ object.get_absolute_url }}">
                                         {{ object.title }}
                                     </a>
                                 </h4>
@@ -145,7 +141,7 @@
 
                                     <h4 class="media-heading">
                                         {% if object.game %}
-                                            <a href="{{ object.game.get_absolute_url }}">{{ object.game.name }}</a>
+                                            <a href="{{ object.get_absolute_url }}">{{ object.game.name }}</a>
                                         {% elif object.title %}
                                             {{ object.title }}
                                         {% else %}

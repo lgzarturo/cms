@@ -1,6 +1,7 @@
 from django.contrib import admin
 
 from django_summernote.admin import SummernoteModelAdmin
+from taggit_helpers.admin import TaggitTabularInline, TaggitListFilter, TaggitCounter
 
 from games.models import Game, Platform, LaunchGame, FeaturedGame, News, Video, Picture, GalleryGame, PersonIndustry, \
     Classification, DeveloperGame, ClassificationGame, PlatformGame
@@ -49,7 +50,7 @@ class PlatformInline(admin.TabularInline):
 
 
 @admin.register(Game)
-class GameAdmin(SummernoteModelAdmin):
+class GameAdmin(TaggitCounter, SummernoteModelAdmin):
     fieldsets = (
         (None, {
             'fields': ('name', 'description', 'rate', 'release_date', 'tags',)
@@ -59,7 +60,10 @@ class GameAdmin(SummernoteModelAdmin):
             'fields': ('image', 'website', 'engine', 'type_game', 'genre',),
         }),
     )
-    inlines = [LaunchGameInline, PictureInline, VideoInline, DeveloperInline, ClassificationInline, PlatformInline, ]
+    inlines = [LaunchGameInline, PictureInline, VideoInline, DeveloperInline, ClassificationInline, PlatformInline,
+               TaggitTabularInline]
+    list_filter = [TaggitListFilter, 'type_game', 'genre', ]
+    list_display = ('name', 'release_date', 'type_game', 'genre', 'taggit_counter', )
 
     class Meta:
         model = Game

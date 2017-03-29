@@ -4,6 +4,7 @@ from products.models import Product, Variation, ProductImage, Category, ProductF
 
 
 class ProductImageInline(admin.TabularInline):
+    fields = ['image', ]
     model = ProductImage
     extra = 0
 
@@ -42,5 +43,7 @@ class CategoryAdmin(admin.ModelAdmin):
 
 @admin.register(ProductFeatured)
 class ProductFeaturedAdmin(admin.ModelAdmin):
+    fields = ['product', 'image', 'title', 'text', 'text_css_color', 'make_image_background', 'show_price', 'active', ]
+
     class Meta:
         model = ProductFeatured

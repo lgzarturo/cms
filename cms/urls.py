@@ -3,10 +3,15 @@ from django.conf.urls import url, include
 from django.conf.urls.static import static
 from django.contrib import admin
 
+admin.site.site_header = 'Panel de Control : Famisoft'
+
+admin.site.site_title = 'Famisoft Software y Desarrollo a la Medida'
+
 urlpatterns = [
     url(r'^', include('web.urls', namespace="web")),
     url(r'^summernote/', include('django_summernote.urls')),
-    url(r'^grappelli/', include('grappelli.urls')),
+    url(r'^jet/', include('jet.urls', 'jet')),
+    url(r'^jet/dashboard/', include('jet.dashboard.urls', 'jet-dashboard')),
     url(r'^admin/', admin.site.urls),
     url(r'^articles/', include("articles.urls", namespace="article")),
     url(r'^products/', include("products.urls", namespace="product")),
