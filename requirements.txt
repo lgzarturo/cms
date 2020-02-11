@@ -1,6 +1,6 @@
 appdirs==1.4.0
 asgiref==3.2.3
-Django==3.0
+Django==3.0.3
 django-analytical==2.2.2
 django-crispy-forms==1.6.1
 django-debug-toolbar==1.6
