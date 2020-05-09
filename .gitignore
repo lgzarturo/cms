@@ -1,5 +1,8 @@
 # IDE files
 .idea/
+.venv/
+
+*.pyc
 
 # Sqlite DB
 *.sqlite3

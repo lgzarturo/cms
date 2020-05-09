@@ -1,6 +1,6 @@
 appdirs==1.4.0
 asgiref==3.2.3
-Django==3.0
+Django>=3.0.3
 django-analytical==2.2.2
 django-crispy-forms==1.6.1
 django-debug-toolbar==1.6
@@ -16,7 +16,7 @@ httplib2==0.10.3
 oauth2client==4.0.0
 olefile==0.44
 packaging==16.8
-Pillow==6.2.1
+Pillow>=6.2.2
 pyasn1==0.2.3
 pyasn1-modules==0.0.8
 pyparsing==2.1.10
