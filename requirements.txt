@@ -12,7 +12,7 @@ django-taggit-helpers==0.1.4
 django-taggit-labels==0.4.1
 feedparser==5.2.1
 google-api-python-client==1.4.1
-httplib2==0.10.3
+httplib2==0.18.0
 oauth2client==4.0.0
 olefile==0.44
 packaging==16.8
